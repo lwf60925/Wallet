@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>数据统计-<%=gAppTitle%></title>
+	<link rel="shortcut icon" href="/images/favicon.png">
+	<link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+	<link rel="stylesheet" href="/stylesheets/listStyle.css"/>
+	<title>数据统计-<%=gAppTitle%></title>
+	<script type="text/javascript" src="javascripts/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(".timeline").eq(0).animate({
+				height:'500px'
+			},3000);
+		});
+	</script>
+	<link rel="stylesheet" type="text/css" href="/stylesheets/Timestyle.css">
+</head>
+<body class="keBody">
+<h1 class="text-muted">收入详情</h1>
+<div class="kePublic">
+	<!--效果html开始-->
+
+	<div class="timeline">
+		<div class="timeline-date">
+			<h2 class="second" style="position: relative;">
+			</h2>
+			<%
+			incomes.forEach(function(income, index) {
+			%>
+			<ul>
+				<li>
+					<h3 class="fontStyle"><%= income.incomeDate %><span>¥<%= income.incomeAmount %></span></h3>
+					<dl class="right">
+						<span><%= income.incomeSubject %></span>
+					</dl>
+				</li>
+			</ul>
+			<%}) %>
+		</div>
+	</div>
+
+	<!--效果html结束-->
+	<div class="clear"></div>
+</div>
+<div class="keBottom">
+	<div class="text-right btnStyle">
+		<a href="/home" class="btn btn-default">返回首页</a>
+		<!--<a href="/incomemonth" class="btn btn-default">月收入</a>-->
+		<a href="/incomestat" class="btn btn-default">收入分类统计</a>
+		<a href="/income" class="btn btn-default">收入记账</a>
+	</div>
+	<p class="keTxtP">
+</div>
+</body>
+</html>

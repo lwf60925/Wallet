@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录页面-<%=gAppTitle%></title>
+    <link rel="shortcut icon" href="/images/favicon.png">
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <link rel="stylesheet" href="/stylesheets/home.css" />
+</head>
+<body>
+
+<div class="col-sm-6 col-sm-offset-3">
+    <div class="alert alert-info header">
+        <h1 class="title">欢迎使用<%=gAppTitle%></h1>
+        <h3>今天是:</h3><h3 id="time" ></h3>
+    </div>
+
+    <div class="rec"><a href="/record" class="btn btn-primary">记一笔账</a></div>
+    <div id="showMoney" >
+        <table align="center">
+            <thead>
+            <tr>
+                <th>总消费</th>
+                <th>总收入</th>
+                <th>结余</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><h4 id="ConsumeSum"></h4></td>
+                <td ><h4 id="IncomeSum">5000</h4></td>
+                <td><h4 id="remaining"></h4></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div id="chBtn">
+        <button type="button" class="btn btn-default" onclick="window.location.href='/logout'">退出</button>
+        <button type="button" class="btn btn-default" onclick="window.location.href='/list'">统计详情</button>
+        <button type="button" class="btn btn-default" onclick="window.location.href='/chart'">图表</button>
+    <!--<input type="button" value="年为单位" class="btn btn-primary " onclick="changeYear()"/>-->
+    <!--<input type="button" value="月为单位" class="btn btn-primary " onclick=" changeMonth()"/>-->
+    <!--<input type="button" value="周为单位" class="btn btn-primary " onclick=" changeWeek()"/>-->
+    </div>
+</div>
+<script>
+    var ConsumePureData=[];
+    <% if (user) { %>
+    <%
+         consumeresults.forEach(function(result, index) {
+     %>
+    ConsumePureData.push("<%= result.amount %>");
+    var consumeSum=ConsumePureData[ConsumePureData.length-1];
+    document.getElementById("ConsumeSum").innerHTML=consumeSum;
+    <%}) %>
+    <% } %>
+
+
+    document.getElementById("remaining").innerHTML=5000-consumeSum;
+</script>
+<script>
+
+</script>
+<script src="/javascripts/chbtn.js"></script>
+<script src='/javascripts/jquery-1.11.0.min.js'></script>
+<script src='/javascripts/bootstrap.min.js'></script>
+</body>
+</html>

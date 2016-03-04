@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>数据统计-<%=gAppTitle%></title>
+	<link href="stylesheets/bootstrap.min.css" media="all" rel="stylesheet">
+	<link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" media="all" rel="stylesheet">
+	<link href="/stylesheets/Tstyles.css" media="all" rel="stylesheet">
+	<link rel="stylesheet" href="/stylesheets/listStyle.css"/>
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.1/modernizr.min.js"></script>-->
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+</head>
+<body>
+<h2 class="text-center" style="color: #FFFFFF">消费详情</h2>
+<div class="text-right btnStyle">
+	<a href="/home" class="btn btn-default">返回首页</a>
+	<a href="/listincome" class="btn btn-default">收入详情</a>
+	<a href="/stat" class="btn btn-default">消费分类统计</a>
+	<a href="/record" class="btn btn-default">消费记账</a>
+</div>
+
+<div class="timeline animated">
+	<%
+	consumes.forEach(function(consume, index) {
+	%>
+	<div class="timeline-row">
+		<div class="timeline-time">
+			<small><%= consume.consumeDate %></small>¥<%= consume.consumeAmount%>
+		</div>
+		<div class="timeline-icon">
+			<div class="bg-primary">
+				<i class="fa fa-arrows-v"></i>
+			</div>
+		</div>
+		<div class="panel timeline-content">
+			<div class="panel-body">
+				<h2>
+					<%= consume.consumeSubject %>
+				</h2>
+			</div>
+		</div>
+
+	</div>
+	<%}) %>
+</div>
+<script src="javascripts/jquery-1.11.0.min.js"></script>
+<script src="javascripts/bootstrap.min.js"></script>
+<script src="javascripts/TimeS.js"></script>
+</body>
+</html>

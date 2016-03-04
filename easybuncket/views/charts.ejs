@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据图表-<%=gAppTitle%></title>
+    <link rel="shortcut icon" href="/images/favicon.png">
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <link rel="stylesheet" href="/stylesheets/chartStyle.css"/>
+    <link rel="stylesheet" href="/stylesheets/listStyle.css"/>
+    <script src="javascripts/echarts.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-static-top navbar-inverse" >
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">钱包</a>
+    <div class="collapse navbar-collapse" id="demo-navbar">
+        <ul class="nav navbar-nav">
+            <li><a href="/home">首页</a></li>
+            <li><a href="/record">消费记录</a></li>
+            <li><a href="/income"> 收入记录</a></li>
+            <li><a href="/list">流水明细</a></li>
+        </ul>
+    </div>
+</nav>
+<!--导航栏END-->
+<div class="text-right btnStyle">
+    <a href="/home" class="btn btn-default">返回首页</a>
+    <a href="/chart" class="btn btn-default">消费图表</a>
+</div>
+<!--图表开始START-->
+<div id="container">
+    <div id="incomeChart" style="width: 400px;height:400px;"></div>
+    <br/>
+    <div id="barChart" style="width: 600px;height:400px"></div>
+</div>
+<!--图表结束-->
+<script type="text/javascript">
+    <%if(user){%>
+    var date=[];
+    var legend=[];
+    var pureDate=[];
+    var legendDate=[];
+    <%incomes.forEach(function(income,index){%>
+    legend.push("<%= income.incomeSubject %>");
+    legendDate.push("<%=income.incomeDate%>")
+    date.push({value:"<%= income.incomeAmount %>",name:"<%= income.incomeSubject %>"});
+    pureDate.push("<%= income.incomeAmount %>");
+    var myChart = echarts.init(document.getElementById('incomeChart'));
+    // 指定图表的配置项和数据
+    var optionOne = {
+        title : {
+            text: '收入情况统计',
+            subtext: 'Power By echarts',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                dataView : {show: true, readOnly: false},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        series : [
+            {
+                name: '占比',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '50%'],
+                data:date,
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+    myChart.setOption(optionOne);
+    window.onresize = myChart.resize;
+    <%}) %>
+    <%}%>
+</script>
+<script>
+    var myChart = echarts.init(document.getElementById('barChart'));
+    // 指定图表的配置项和数据
+    var option = {
+        title : {
+            text: '每日收入',
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                dataView : {show: true, readOnly: false},
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        xAxis : [
+            {
+                type : 'category',
+                data : legendDate
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                name:'收入',
+                type:'bar',
+                data:pureDate,
+                markPoint : {
+                    data : [
+                        {type : 'max', name: '最大值'},
+                        {type : 'min', name: '最小值'}
+                    ]
+                },
+
+            },
+        ]
+    };
+
+    myChart.setOption(option);
+    window.onresize = myChart.resize;
+</script>
+</body>
+</html>
